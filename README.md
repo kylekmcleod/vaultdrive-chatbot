@@ -1,4 +1,6 @@
 # August Chat Widget
+See demo below:
+https://github.com/user-attachments/assets/2d24d059-acd3-44b8-8623-9b94ed1ea251
 
 Chat widget for August Motor Cars. The widget sits in the bottom right of the screen for the dealership website. Customers can ask questions and get help from Jessica which is the agent.
 
