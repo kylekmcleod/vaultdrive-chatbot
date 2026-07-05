@@ -49,6 +49,8 @@ Code structure is modular. It is a standalone component that can be ported to an
 
 ## Using the widget in another React app (SEE LICENSE FILE)
 
+This code and software is completely free for you to use under the MIT License. You can modify and deploy however you would like!
+
 I designed the whole chat system in one modular folder `src/components/chat-widget/`. It has no external dependencies outside of React itself so all the logic, styles, assets, and API code are inside that one folder. You are free to use it wherever, I give you full rights.
 
 To drop it into another React project:
