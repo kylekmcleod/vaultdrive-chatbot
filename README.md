@@ -1,8 +1,8 @@
 # August Chat Widget
 
-Chat widget for August Motor Cars. The widget sits in the bottom-right corner of the dealership website. Customers can ask questions and get help from Jessica which is the agent.
+Chat widget for August Motor Cars. The widget sits in the bottom right of the screen for the dealership website. Customers can ask questions and get help from Jessica which is the agent.
 
-## How to run it
+## How to run
 
 1. Clone the repo
 2. Run `npm install`
@@ -11,7 +11,6 @@ Chat widget for August Motor Cars. The widget sits in the bottom-right corner of
    VITE_GENAI_API_KEY=your_key_here
   ```
    You can get a free key from [https://aistudio.google.com/apikey](https://aistudio.google.com/apikey)
-   
 4. Run `npm run dev`
 5. Open [http://localhost:5173](http://localhost:5173) in your browser
 
@@ -36,3 +35,31 @@ Chat widget for August Motor Cars. The widget sits in the bottom-right corner of
 I went with the Gemini API over OpenAI because it has a free tier that doesn't require a credit card. The chat uses a simple REST call rather than an SDK to keep dependencies minimal. 
 
 I stored messages in localStorage so the conversation doesn't end when a user accidentally closed or refreshes. Every time a new message is sent or received, the convo gets saved to the browser's localStorage as JSON. When the widget loads, it checks if there's a saved conversation and picks up where you left off instead of showing the welcome screen again. Clicking "End Conversation" clears the stored messages so the next time the widget opens it starts fresh.
+
+## Using the widget in another React app
+
+I designed the whole chat system in one modular folder `src/components/chat-widget/`. It has no external dependencies outside of React itself so all the logic, styles, assets, and API code are inside that one folder. You are free to use it wherever, I give you full rights.
+
+To drop it into another React project:
+
+1. Copy the `chat-widget/` folder into your project's components directory (e.g. `src/components/chat-widget/`)
+2. Add a `VITE_GENAI_API_KEY` to your `.env`
+3. Import and render it:
+
+```jsx
+import ChatWidget from './components/chat-widget/ChatWidget'
+
+function App() {
+  return (
+    <div>
+      {/* your app content */}
+      <ChatWidget />
+    </div>
+  )
+}
+```
+
+Widget should work after this. Note that right now the API key live in the frontend, which is fine for a demo but not for production. If someone wanted to, they could find the key from the network tab on browser and spam it like crazy.
+
+Before deploying for real (if you ever did), I'd heavily suggest moving the API call behind a proxy or something (like express or cloudflare) that holds the key. Then call the server instead of gemini directly.
+
