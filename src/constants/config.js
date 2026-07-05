@@ -10,3 +10,5 @@ export const WIDGET_VIEWS = {
   CHAT: 'chat',
   VOICE: 'voice',
 }
+
+export const GEMINI_MODEL = 'gemini-2.5-flash'
