@@ -1,5 +1,6 @@
 import { useState, useRef } from 'react'
 import { WIDGET_VIEWS } from '../../constants/config'
+import { hasSavedChat, clearSavedMessages } from '../../hooks/useChat'
 import FloatingButton from './launcher/FloatingButton'
 import LandingScreen from './landing/LandingScreen'
 import ChatScreen from './chat/ChatScreen'
@@ -8,7 +9,9 @@ import './ChatWidget.css'
 const CLOSE_ANIMATION_MS = 280
 
 function ChatWidget() {
-  const [view, setView] = useState(WIDGET_VIEWS.CLOSED)
+  const [view, setView] = useState(() => {
+    return hasSavedChat() ? WIDGET_VIEWS.CHAT : WIDGET_VIEWS.CLOSED
+  })
   const [isClosing, setIsClosing] = useState(false)
   const initialMessageRef = useRef(null)
 
@@ -16,7 +19,12 @@ function ChatWidget() {
 
   const openWidget = () => {
     setIsClosing(false)
-    setView(WIDGET_VIEWS.LANDING)
+    if (hasSavedChat()) {
+      initialMessageRef.current = null
+      setView(WIDGET_VIEWS.CHAT)
+    } else {
+      setView(WIDGET_VIEWS.LANDING)
+    }
   }
 
   const goToChat = (message) => {
@@ -29,7 +37,16 @@ function ChatWidget() {
     window.setTimeout(() => {
       setView(WIDGET_VIEWS.CLOSED)
       setIsClosing(false)
+    }, CLOSE_ANIMATION_MS)
+  }
+
+  const handleEndConversation = () => {
+    setIsClosing(true)
+    window.setTimeout(() => {
       initialMessageRef.current = null
+      clearSavedMessages()
+      setView(WIDGET_VIEWS.CLOSED)
+      setIsClosing(false)
     }, CLOSE_ANIMATION_MS)
   }
 
@@ -50,6 +67,7 @@ function ChatWidget() {
       {view === WIDGET_VIEWS.CHAT && (
         <ChatScreen
           onClose={closeWidget}
+          onEndConversation={handleEndConversation}
           isClosing={isClosing}
           initialMessage={initialMessageRef.current}
         />

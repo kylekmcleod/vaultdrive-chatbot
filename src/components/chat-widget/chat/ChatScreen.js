@@ -6,8 +6,8 @@ import PoweredByFooter from '../ui/PoweredByFooter'
 import MessageList from './MessageList'
 import './ChatScreen.css'
 
-function ChatScreen({ onClose, isClosing, initialMessage }) {
-  const { messages, sendMessage, isLoading, error } = useChat(initialMessage)
+function ChatScreen({ onClose, onEndConversation, isClosing, initialMessage }) {
+  const { messages, sendMessage, isLoading, error, endConversation } = useChat(initialMessage)
   const [inputValue, setInputValue] = useState('')
 
   const handleSubmit = (event) => {
@@ -17,12 +17,17 @@ function ChatScreen({ onClose, isClosing, initialMessage }) {
     setInputValue('')
   }
 
+  const handleEndConversation = () => {
+    endConversation()
+    onEndConversation()
+  }
+
   return (
     <section
       className={`chat-screen ${isClosing ? 'chat-screen--closing' : 'chat-screen--open'}`}
       aria-label="Chat with Jessica"
     >
-      <WidgetHeader onClose={onClose} />
+      <WidgetHeader onClose={onClose} onEndConversation={handleEndConversation} />
 
       <MessageList messages={messages} isLoading={isLoading} />
 
