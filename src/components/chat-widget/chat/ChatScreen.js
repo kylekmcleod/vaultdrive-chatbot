@@ -6,7 +6,7 @@ import PoweredByFooter from '../ui/PoweredByFooter'
 import MessageList from './MessageList'
 import './ChatScreen.css'
 
-function ChatScreen({ onClose, onEndConversation, isClosing, initialMessage }) {
+function ChatScreen({ onClose, onEndConversation, onStartVoice, isClosing, initialMessage }) {
   const { messages, sendMessage, isLoading, error, endConversation } = useChat(initialMessage)
   const [inputValue, setInputValue] = useState('')
   const [showConfirm, setShowConfirm] = useState(false)
@@ -79,7 +79,10 @@ function ChatScreen({ onClose, onEndConversation, isClosing, initialMessage }) {
           disabled={isLoading}
         />
         <p className="chat-screen__voice-toggle">
-          Prefer to talk? <button type="button" className="chat-screen__voice-link">Start a voice call</button>
+          Prefer to talk?{' '}
+          <button type="button" className="chat-screen__voice-link" onClick={onStartVoice}>
+            Start a voice call
+          </button>
         </p>
         <PoweredByFooter />
       </div>

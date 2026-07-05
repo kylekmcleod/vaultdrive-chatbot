@@ -74,6 +74,7 @@ function ChatWidget() {
         <ChatScreen
           onClose={closeWidget}
           onEndConversation={handleEndConversation}
+          onStartVoice={goToVoice}
           isClosing={isClosing}
           initialMessage={initialMessageRef.current}
         />
