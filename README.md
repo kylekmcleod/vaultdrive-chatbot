@@ -32,9 +32,19 @@ Chat widget for August Motor Cars. The widget sits in the bottom right of the sc
 
 ## Thoughts/Notes
 
+The doc sent had some inconsistencies and I used best judgetment for fixes. See below:
+
+- augustmotorcars.com/customs doesn't exist, found fixed link [https://www.augustmotorcars.com/august-customs/](https://www.augustmotorcars.com/august-customs/)
+- [vaultdrive.com](http://vaultdrive.com) reference in doc invalid link
+- no VAPI api key (no worries), I added logic for the call/voice screen but it's just React components, no functionality
+
 I went with the Gemini API over OpenAI because it has a free tier that doesn't require a credit card. The chat uses a simple REST call rather than an SDK to keep dependencies minimal. 
 
 I stored messages in localStorage so the conversation doesn't end when a user accidentally closed or refreshes. Every time a new message is sent or received, the convo gets saved to the browser's localStorage as JSON. When the widget loads, it checks if there's a saved conversation and picks up where you left off instead of showing the welcome screen again. Clicking "End Conversation" clears the stored messages so the next time the widget opens it starts fresh.
+
+API error messages added. I think gemini is like 15 messages until rate limited so right now just shpows message straight from gemini. Can be customized.
+
+Code structure is modular. It is a standalone component that can be ported to any React app. See below.
 
 ## Using the widget in another React app
 
@@ -63,3 +73,4 @@ Widget should work after this. Note that right now the API key live in the front
 
 Before deploying for real (if you ever did), I'd heavily suggest moving the API call behind a proxy or something (like express or cloudflare) that holds the key. Then call the server instead of gemini directly.
 
+If you want to customize the system prompt (context for the model before the message chain starts), you can modify  `src/components/constants/prompts.js`
