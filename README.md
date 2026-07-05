@@ -11,6 +11,7 @@ Chat widget for August Motor Cars. The widget sits in the bottom-right corner of
    VITE_GENAI_API_KEY=your_key_here
   ```
    You can get a free key from [https://aistudio.google.com/apikey](https://aistudio.google.com/apikey)
+   
 4. Run `npm run dev`
 5. Open [http://localhost:5173](http://localhost:5173) in your browser
 
